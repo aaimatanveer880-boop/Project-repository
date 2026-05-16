@@ -6,17 +6,48 @@ class ShoppingApp {
 
         Scanner sc = new Scanner(System.in);
 
-        ShoppingService service = new ShoppingService();
-        Cart cart = new Cart();
+        AuthService auth = new AuthService();
+        boolean isLoggedIn = false;
 
-        while (true) {
+        // LOGIN / SIGNUP
+        while (!isLoggedIn) {
 
-            System.out.println("\n1 View Products\n2 Add to Cart\n3 Checkout\n4 Exit");
-
+            System.out.println("\n1 Signup\n2 Login");
             String choice = sc.nextLine();
 
             if (choice.equals("1")) {
 
+                System.out.println("Enter username:");
+                String u = sc.nextLine();
+
+                System.out.println("Enter password:");
+                String p = sc.nextLine();
+
+                auth.signup(u, p);
+            }
+
+            else if (choice.equals("2")) {
+
+                System.out.println("Enter username:");
+                String u = sc.nextLine();
+
+                System.out.println("Enter password:");
+                String p = sc.nextLine();
+
+                isLoggedIn = auth.login(u, p);
+            }
+        }
+
+        ShoppingService service = new ShoppingService();
+        Cart cart = new Cart();
+        OrderService orderService = new OrderService();
+
+        while (true) {
+
+            System.out.println("\n1 View Products\n2 Add to Cart\n3 Checkout\n4 View Orders\n5 Exit");
+            String choice = sc.nextLine();
+
+            if (choice.equals("1")) {
                 service.showProducts();
             }
 
@@ -36,7 +67,7 @@ class ShoppingApp {
                     }
 
                 } catch (NumberFormatException e) {
-                    System.out.println("Please enter a valid number!");
+                    System.out.println("Enter valid number!");
                 }
             }
 
@@ -48,16 +79,18 @@ class ShoppingApp {
 
                 System.out.println("Total = " + total);
 
+                orderService.placeOrder(total);
+
                 cart.clearCart();
             }
 
             else if (choice.equals("4")) {
-                System.out.println("Thank you!");
-                break;
+                orderService.showOrders();
             }
 
-            else {
-                System.out.println("Invalid option");
+            else if (choice.equals("5")) {
+                System.out.println("Thank you!");
+                break;
             }
         }
 
