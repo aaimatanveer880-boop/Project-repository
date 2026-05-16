@@ -33,6 +33,7 @@ class ShoppingService {
     }
 
     // Show products with separator
+    //improved display
     public void showProducts() {
         for (int i = 0; i < products.size(); i++) {
     
