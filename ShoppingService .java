@@ -35,14 +35,15 @@ class ShoppingService {
     // Show products with separator
     public void showProducts() {
         for (int i = 0; i < products.size(); i++) {
-
+    
             Product p = products.get(i);
-
-            System.out.println(i + " " + p.getName() + " " + p.getPrice());
-            System.out.println("====================================");
+    
+            System.out.println("ID: " + i);
+            System.out.println("Name: " + p.getName());
+            System.out.println("Price: " + p.getPrice());
+            System.out.println("-----------------------------");
         }
     }
-
     public Product getProduct(int index) {
         if (index >= 0 && index < products.size()) {
             return products.get(index);
