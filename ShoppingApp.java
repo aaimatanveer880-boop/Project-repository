@@ -9,7 +9,7 @@ class ShoppingApp {
         AuthService auth = new AuthService();
         boolean isLoggedIn = false;
 
-        // LOGIN / SIGNUP
+        // 🔐 LOGIN / SIGNUP
         while (!isLoggedIn) {
 
             System.out.println("\n1 Signup\n2 Login");
@@ -36,11 +36,17 @@ class ShoppingApp {
 
                 isLoggedIn = auth.login(u, p);
             }
+
+            else {
+                System.out.println("Invalid option");
+            }
         }
 
+        // 🛒 SYSTEM START
         ShoppingService service = new ShoppingService();
         Cart cart = new Cart();
         OrderService orderService = new OrderService();
+        Payment payment = new Payment();
 
         while (true) {
 
@@ -54,7 +60,7 @@ class ShoppingApp {
             else if (choice.equals("2")) {
 
                 try {
-                    System.out.println("Enter index:");
+                    System.out.println("Enter product index:");
                     int index = Integer.parseInt(sc.nextLine());
 
                     Product p = service.getProduct(index);
@@ -79,6 +85,10 @@ class ShoppingApp {
 
                 System.out.println("Total = " + total);
 
+                // 💳 PAYMENT WITH OPTIONS
+                payment.processPayment(total, sc);
+
+                // 📦 ORDER TRACKING
                 orderService.placeOrder(total);
 
                 cart.clearCart();
@@ -91,6 +101,10 @@ class ShoppingApp {
             else if (choice.equals("5")) {
                 System.out.println("Thank you!");
                 break;
+            }
+
+            else {
+                System.out.println("Invalid option");
             }
         }
 
