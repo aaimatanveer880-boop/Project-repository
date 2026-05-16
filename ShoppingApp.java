@@ -12,6 +12,7 @@ class ShoppingApp {
         while (true) {
 
             System.out.println("\n1 View Products\n2 Add to Cart\n3 Checkout\n4 Exit");
+
             String choice = sc.nextLine();
 
             if (choice.equals("1")) {
@@ -21,16 +22,21 @@ class ShoppingApp {
 
             else if (choice.equals("2")) {
 
-                System.out.println("Enter index:");
-                int index = Integer.parseInt(sc.nextLine());
+                try {
+                    System.out.println("Enter index:");
+                    int index = Integer.parseInt(sc.nextLine());
 
-                Product p = service.getProduct(index);
+                    Product p = service.getProduct(index);
 
-                if (p != null) {
-                    cart.addProduct(p);
-                    System.out.println("Added to cart");
-                } else {
-                    System.out.println("Invalid index");
+                    if (p != null) {
+                        cart.addProduct(p);
+                        System.out.println("Added to cart");
+                    } else {
+                        System.out.println("Invalid index");
+                    }
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a valid number!");
                 }
             }
 
@@ -46,6 +52,7 @@ class ShoppingApp {
             }
 
             else if (choice.equals("4")) {
+                System.out.println("Thank you!");
                 break;
             }
 
