@@ -7,6 +7,9 @@ class ShoppingApp {
         Scanner sc = new Scanner(System.in);
 
         AuthService auth = new AuthService();
+        ReviewService reviewService = new ReviewService();
+        DiscountService discountService = new DiscountService();
+
         boolean isLoggedIn = false;
 
         // 🔐 LOGIN / SIGNUP
@@ -50,7 +53,7 @@ class ShoppingApp {
 
         while (true) {
 
-            System.out.println("\n1 View Products\n2 Add to Cart\n3 Checkout\n4 View Orders\n5 Exit");
+            System.out.println("\n1 View Products\n2 Add to Cart\n3 Checkout\n4 View Orders\n5 Reviews\n6 Add Review\n7 Apply Discount\n8 Exit");
             String choice = sc.nextLine();
 
             if (choice.equals("1")) {
@@ -85,10 +88,8 @@ class ShoppingApp {
 
                 System.out.println("Total = " + total);
 
-                // 💳 PAYMENT WITH OPTIONS
                 payment.processPayment(total, sc);
 
-                // 📦 ORDER TRACKING
                 orderService.placeOrder(total);
 
                 cart.clearCart();
@@ -99,6 +100,35 @@ class ShoppingApp {
             }
 
             else if (choice.equals("5")) {
+                reviewService.showAllReviews();
+            }
+
+            else if (choice.equals("6")) {
+
+                System.out.println("Enter name:");
+                String name = sc.nextLine();
+
+                System.out.println("Enter comment:");
+                String comment = sc.nextLine();
+
+                System.out.println("Enter rating (1-5):");
+                int rating = Integer.parseInt(sc.nextLine());
+
+                reviewService.addReview(name, comment, rating);
+            }
+
+            else if (choice.equals("7")) {
+
+                System.out.println("Enter coupon code:");
+                String code = sc.nextLine();
+
+                System.out.println("Enter price:");
+                double price = Double.parseDouble(sc.nextLine());
+
+                discountService.applyCoupon(code, price);
+            }
+
+            else if (choice.equals("8")) {
                 System.out.println("Thank you!");
                 break;
             }
